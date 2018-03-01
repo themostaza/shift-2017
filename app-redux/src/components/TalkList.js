@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {talkId} from '../utils/helpers';
 import TalkItem from './TalkItem';
+import {talkId} from '../utils/helpers';
 
 export default ({talks, selectedTalk, favorites, onTalkClick}) => (
   <div className="talk-list">
