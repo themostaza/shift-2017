@@ -1,92 +1,53 @@
-import React, {Component} from 'react';
-import update from 'react-addons-update';
+import React, { Component } from 'react';
 
 import TalkList from './components/TalkList';
 import Talk from './components/Talk';
 import Filter from './components/Filter';
 
-import loadData from './utils/api';
-import {talkId} from './utils/helpers';
+import { talkId } from './utils/helpers';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      loading: false,
-      talks: null,
-      filter: 'main',
-      selectedTalk: null
-    };
+  onTalkClick = () => {
   }
 
-  componentWillMount() {
-    this.setState({
-      loading: true
-    });
-
-    loadData().then((data) => {
-      this.setState({
-        loading: false,
-        talks: data
-      });
-    }, () => {
-      this.setState({
-        loading: false
-      });
-    });
+  onFavClick = () => {
   }
 
-  onTalkClick(talk) {
-    this.setState({
-      selectedTalk: talkId(talk)
-    });
-  }
-
-  onFavClick() {
-    const selectedTalk = this.state.talks.find((talk) => talkId(talk) === this.state.selectedTalk);
-
-    this.setState({
-      talks: update(this.state.talks, {
-        [this.state.talks.indexOf(selectedTalk)]: {
-          $merge: {
-            favorite: !selectedTalk.favorite
-          }
-        }
-      })
-    });
-  }
-
-  onFilterChange(filter) {
-    this.setState({
-      filter: filter
-    });
+  onFilterChange = () => {
   }
 
   render() {
-    if (this.state.loading) {
+    /*
+     * TODO: these variables should have dynamically assigned values
+     */
+    const selectedTalk = null;
+    const loading = false;
+    const talks = [];
+    const list = [];
+    const favorites = [];
+    const filter = 'main'; // Possible values: 'main','area55'
+
+    if (loading) {
       return <div className="message">Loading...</div>;
-    } else if (!this.state.talks) {
+    } else if (!talks) {
+      // Error while fetching talks
       return <div className="message">Something is wrong :(</div>;
     }
-
-    const list = this.state.talks.filter((talk) => talk.location === this.state.filter);
-    const favorites = this.state.talks.filter((talk) => talk.favorite);
-    const selectedTalk = this.state.talks.find((talk) => talkId(talk) === this.state.selectedTalk);
 
     return (
       <div className="main">
         <div className="talk-container">
-          <Filter active={this.state.filter} onFilterChange={this.onFilterChange.bind(this)} />
+          <Filter active={filter} onFilterChange={this.onFilterChange} />
           <TalkList
             talks={list}
             selectedTalk={selectedTalk}
             favorites={favorites}
-            onTalkClick={this.onTalkClick.bind(this)}
+            onTalkClick={this.onTalkClick}
           />
         </div>
         <div className="talk-details">
-          {selectedTalk ? <Talk talk={selectedTalk} onFavClick={this.onFavClick.bind(this)} /> : 'Select a talk'}
+          {selectedTalk ? <Talk talk={talkId(selectedTalk)} onFavClick={this.onFavClick} /> : 'Select a talk'}
         </div>
       </div>
     );
@@ -94,3 +55,4 @@ class App extends Component {
 }
 
 export default App;
+
