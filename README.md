@@ -1,21 +1,21 @@
-# Shift 2017
-
-Sample code for the "React State Management with Redux and MobX" workshop for Shift Split 2017.
+# React State Management Training
 
 It covers three state management methods:
 * React setState
 * React + Redux
 * React + MobX
 
-## Example app
-Tech conference app
-
+## Training app
 Actions:
 * Fetch talk list (async action)
 * Favourite talks (simple sync action)
 * Filter talks (selectors / computed props)
 
 ## Example implementations
+
+The `master` branch has not the full implementation but it has just the base code, you can develop the state managament specific code on top of that.
+
+You can find the full implementation in the `original` branch.
 
 ### setState
 
@@ -37,3 +37,6 @@ Actions:
   cd app-mobx
   npm install
 ```
+
+## Original work
+Most of the work has been done by Infinum, you can find more info [here](https://www.slideshare.net/darko3/react-state-management-with-redux-and-mobx). Thanks!
