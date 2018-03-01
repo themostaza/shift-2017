@@ -1,18 +1,18 @@
 import React from 'react';
-import {observer} from 'mobx-react';
 
+import {formatTwitter, formatLinkedin, formatGithub} from '../utils/helpers';
 import Social from './Social';
 
-export default observer(({speaker}) => (
+export default ({speaker}) => (
   <div className="speaker">
     <img src={speaker.photo} alt={speaker.name} className="speaker-photo" />
     <h2>{speaker.name}</h2>
     <h3>{speaker.title}, {speaker.company}</h3>
     <div>{speaker.bio}</div>
     <ul className="social-list">
-      <Social name="Twitter" social={speaker.twitter} />
-      <Social name="Linkedin" social={speaker.linkedin} />
-      <Social name="Github" social={speaker.github} />
+      <Social name="Twitter" social={formatTwitter(speaker.social)} />
+      <Social name="Linkedin" social={formatLinkedin(speaker.social)} />
+      <Social name="Github" social={formatGithub(speaker.social)} />
     </ul>
   </div>
-));
+);

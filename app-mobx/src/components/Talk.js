@@ -1,9 +1,9 @@
 import React from 'react';
-import {observer} from 'mobx-react';
 
+import {formatTime} from '../utils/helpers';
 import Speaker from './Speaker';
 
-export default observer(({talk, onFavClick}) => (
+export default ({talk, onFavClick}) => (
   <div className="talk">
     <h2>{talk.title}</h2>
     <div>
@@ -14,8 +14,8 @@ export default observer(({talk, onFavClick}) => (
         Favorite
       </button>
     </div>
-    <h3>{talk.location}, {talk.displayStart}-{talk.displayEnd}</h3>
-    <div>{talk.day}</div>
+    <h3>{talk.location}, {formatTime(talk.time.start)}-{formatTime(talk.time.end)}</h3>
+    <div>{talk.date}</div>
     {talk.speaker && <Speaker speaker={talk.speaker} />}
   </div>
-));
+);

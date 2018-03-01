@@ -1,50 +1,53 @@
-import React, {Component} from 'react';
-import {observer} from 'mobx-react';
-import {action} from 'mobx';
+import React, { Component } from 'react';
 
 import TalkList from './components/TalkList';
 import Talk from './components/Talk';
 import Filter from './components/Filter';
 
-@observer
+import { talkId } from './utils/helpers';
+
 class App extends Component {
-  @action onTalkClick(talk) {
-    const {store} = this.props;
-    store.selectedTalk = talk;
+
+  onTalkClick = () => {
   }
 
-  @action onFavClick() {
-    const {store} = this.props;
-    store.selectedTalk.favorite = !store.selectedTalk.favorite;
+  onFavClick = () => {
   }
 
-  @action onFilterChange(filter) {
-    const {store} = this.props;
-    store.filter = filter;
+  onFilterChange = () => {
   }
 
   render() {
-    const {store} = this.props;
+    /*
+     * TODO: these variables should have dynamically assigned values
+     */
+    const selectedTalk = null;
+    const loading = false;
+    const talks = [];
+    const list = [];
+    const favorites = [];
+    const filter = 'main'; // Possible values: 'main','area55'
 
-    if (store.loading) {
+    if (loading) {
       return <div className="message">Loading...</div>;
-    } else if (!store.talks) {
+    } else if (!talks) {
+      // Error while fetching talks
       return <div className="message">Something is wrong :(</div>;
     }
 
     return (
       <div className="main">
         <div className="talk-container">
-          <Filter active={store.filter} onFilterChange={this.onFilterChange.bind(this)} />
+          <Filter active={filter} onFilterChange={this.onFilterChange} />
           <TalkList
-            talks={store.list}
-            selectedTalk={store.selectedTalk}
-            favorites={store.favorites}
-            onTalkClick={this.onTalkClick.bind(this)}
+            talks={list}
+            selectedTalk={selectedTalk}
+            favorites={favorites}
+            onTalkClick={this.onTalkClick}
           />
         </div>
         <div className="talk-details">
-          {store.selectedTalk ? <Talk talk={store.selectedTalk} onFavClick={this.onFavClick.bind(this)} /> : 'Select a talk'}
+          {selectedTalk ? <Talk talk={talkId(selectedTalk)} onFavClick={this.onFavClick} /> : 'Select a talk'}
         </div>
       </div>
     );
@@ -52,3 +55,4 @@ class App extends Component {
 }
 
 export default App;
+
